@@ -1,23 +1,38 @@
 #include <stdio.h>
+#include <string.h>
 
-#define IN 1
-#define OUT 0
-#define MAXLENGTH 1000
+#define MAXLENGTH 50
 
+int getline2(char s[]);
 int grep(char s[], char v[]);
-int getline(char s[]);
 
 int main(int argc, char const *argv[])
 {
-	/* code */
+	char s[MAXLENGTH];
+	char v[] = "char";
+	printf("%d\n", grep(s, v));
+
 	return 0;
+}
+
+int getline2(char s[]) {
+	char c;
+	int i = 0;
+	while ((c = getchar()) != '\n' && c != EOF) {
+		s[i++] = c;
+	}
+	s[i] = '\0';
+	if (c == EOF) {
+		return -1;
+	}else
+		return i;
 }
 
 int grep(char s[], char v[]) {
 	int len;
 	int i, j, k;
 	int num = 0;
-	while ((len = getline(s)) >= 0) {
+	while ((len = getline2(s)) >= 0) {
 		for (i = 0; strlen(s) - i >= strlen(v); i++) {
 			j = 0;
 			if (s[i] == v[j]) {
@@ -29,18 +44,6 @@ int grep(char s[], char v[]) {
 				break;
 			}
 		}
-
 	}
 	return num;
-}
-
-int getline(char s[]) {
-	char c;
-	int i = 0;
-	while ((c = getchar()) != '\n') {
-		s[i++] = c;
-	}
-	s[i++] = c;
-	s[i] = '\0';
-	return (i - 1)
 }
