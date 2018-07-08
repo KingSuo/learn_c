@@ -15,7 +15,7 @@ int strrindex(char s[], char t[]) {
 	int i, j, k;
 
 	for (i = strlen(s) - 1; i >= strlen(t) - 1; i--) {
-		j = strlen(t);
+		j = strlen(t) - 1;
 		for (k = i; j >= 0 && s[k] == t[j]; k--, j--);
 		if (j < 0)
 			return k;
