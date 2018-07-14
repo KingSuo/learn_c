@@ -3,7 +3,7 @@
 
 #define MAXLENGTH 50
 
-int getline2(char s[]);
+int getlien2(char s[]);
 int grep(char s[], char v[]);
 
 int main(int argc, char const *argv[])

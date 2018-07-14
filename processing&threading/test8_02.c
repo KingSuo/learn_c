@@ -1,11 +1,13 @@
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int main(int argc, char const *argv[])
 {
-	pid_t pid;
+	pid_t pid, pid_wait;
+	int status;
 
 	pid = fork();
 	if (-1 == pid) {
@@ -15,6 +17,8 @@ int main(int argc, char const *argv[])
 		printf("Child process!\n");
 	}else {
 		printf("Parent process! Child process ID: %d\n", pid);
+		pid_wait = waitpid(pid, &status, 0);
+		printf("Child process %d returned!\n", pid_wait);
 	}
 	return 0;
 }
