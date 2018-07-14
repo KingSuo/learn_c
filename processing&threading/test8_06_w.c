@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 
 int main(int argc, char const *argv[])
 {
@@ -11,7 +12,7 @@ int main(int argc, char const *argv[])
 	char *shmp;
 	char *temp = "This is test message!";
 
-	shmid = shmget(0x09, sizeof(int), SHM_W|SHM_R|IPC_CREATE|IPC_EXCL);
+	shmid = shmget(0x09, sizeof(int), SHM_W|SHM_R|IPC_CREAT|IPC_EXCL);
 	if (-1 == shmid)
 		perror("create share memory");
 
@@ -19,6 +20,7 @@ int main(int argc, char const *argv[])
 	if ((char *)-1 == shmp)
 		perror("get share memory address");
 	printf("shmp: %p\n", shmp);
+	printf("shmid: %d\n", shmid);
 	strcpy(shmp, temp);
 	shmdt(shmp);
 
