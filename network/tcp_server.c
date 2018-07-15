@@ -14,12 +14,12 @@
 int main(int argc, char const *argv[])
 {
 	int server_socket_id, client_socket_id;
-	struct sockaddr socket_server_addr, socket_client_addr;
+	struct sockaddr_in socket_server_addr, socket_client_addr;
 	char buf_rec[101], *buf_send;
 	int len, n;
 
 	/* create socket */
-	server_socket_id = socket(AF_IENT, SOCK_STREAM, 0);
+	server_socket_id = socket(AF_INET, SOCK_STREAM, 0);
 	if (server_socket_id == -1) {
 		printf("Error to create socket! %d\n", errno);
 		return 0;
@@ -29,7 +29,7 @@ int main(int argc, char const *argv[])
 
 	/* Set struct of socket_addr */
 	bzero(&socket_server_addr, sizeof(socket_server_addr));
-	socket_server_addr.sin_family = AF_IENT;
+	socket_server_addr.sin_family = AF_INET;
 	socket_server_addr.sin_port = htons(EHCO_PORT);
 	socket_server_addr.sin_addr.s_addr = htons(INADDR_ANY);
 	bzero(&(socket_server_addr.sin_zero), 8);
@@ -52,8 +52,8 @@ int main(int argc, char const *argv[])
 	}
 
 	/* Accept to client tcp */
-	len = sizeof(socket_client_addr)
-	client_socket_id = accept(server_socket_id, (struct socetaddr*)socket_client_addr, &len-);
+	len = sizeof(socket_client_addr);
+	client_socket_id = accept(server_socket_id, (struct sockaddr*)&socket_client_addr, &len);
 	if (client_socket_id == -1) {
 		printf("Error to accept to client! %d\n", errno);
 		close(server_socket_id);
@@ -64,14 +64,15 @@ int main(int argc, char const *argv[])
 
 	/* receive message from client & send some message to client */
 	while (n = recv(client_socket_id, buf_rec, 100, 0) > 0) {
-		buf_rec[n] = '\0';
+		// buf_rec[n] = '\0';
 		printf("Receive %d datas from client: %s\n", n, buf_rec);
 		fflush(stdout);
 		buf_send = "receive datas: ";
-		strcat(buf_send, (char *)n);
-		if (strcmp(buf_rec, "quit", 4) == 0) {
+		// strcat(buf_send, n);
+		if (strncmp(buf_rec, "quit", 4) == 0) {
 			printf("Quit Server!\n");
-			buf_send = "quit"
+			buf_send = "quit";
+			send(client_socket_id, buf_send, 100, 0);
 			break;
 		}
 
