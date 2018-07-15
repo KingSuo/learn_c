@@ -69,13 +69,15 @@ int main(int argc, char const *argv[])
 		fflush(stdout);
 		buf_send = "receive datas: ";
 		strcat(buf_send, (char *)n);
+		if (strcmp(buf_rec, "quit", 4) == 0) {
+			printf("Quit Server!\n");
+			buf_send = "quit"
+			break;
+		}
 
 		/* send message to client */
 		send(client_socket_id, buf_send, 100, 0);
-		if (strcmp(buf_rec, "quit", 4) == 0) {
-			printf("Quit!\n");
-			break;
-		}
+		
 	}
 	close(client_socket_id);
 	close(server_socket_id);
