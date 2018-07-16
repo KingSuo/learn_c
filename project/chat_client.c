@@ -94,7 +94,7 @@ void* thread_recv(void *arg) {	// receive message from client
 	while (1) {
 		n = recv(socket_id, buf_rec, 100, 0);
 		if (n > 0) {
-			printf("Receive %d datas from server %d: %s\n", n, socket_id, buf_rec);
+			printf("Server %d: %s\n", socket_id, buf_rec);
 			
 			if (strncmp(buf_rec, "quit", 4) == 0) {
 				printf("Server %d quit!\n", socket_id);
@@ -114,7 +114,7 @@ void* thread_send(void *arg) {	// send message to client
 		scanf("%s[^\n]", send_msg);
 		if (socket_id) {
 			send(socket_id, send_msg, 100, 0);
-			printf("Send msg:%s\n", send_msg);
+			printf("Client %d: %s\n", socket_id, send_msg);
 			if (strncmp(send_msg, "quit", 4) == 0) {
 				flag = 0;
 				break;
