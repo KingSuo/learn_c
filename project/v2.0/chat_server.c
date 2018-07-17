@@ -104,7 +104,9 @@ int main(int argc, char const *argv[])
 		if (pthread_join(thread_recv_id, NULL)) {
 			perror("Wait recv thread error!");
 			return 0;
-		}	
+		}else {
+			printf("Join thread %lu OK!\n", thread_recv_id);
+		}
 	}
 	for (i = 0; i < client_num; i++) {
 		thread_send_id = thread_send_ids[i];
