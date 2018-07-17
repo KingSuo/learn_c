@@ -121,7 +121,8 @@ void* thread_accept(void *arg) {		// Accept to client tcp
 	extern struct sockaddr_in socket_client_addr;
 	extern int client_num;
 
-	int len, i, client_socket_id;
+	int i, client_socket_id;
+	socklen_t len;
 	len = sizeof(socket_client_addr);
 
 	while(1) {
